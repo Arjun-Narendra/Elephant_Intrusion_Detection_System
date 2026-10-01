@@ -1,155 +1,180 @@
-Elephant Intrusion Detection System (EIDS)
+# Elephant Intrusion Detection System (EIDS)
 
-A seismic signal-based Elephant Intrusion Detection System that combines signal processing, a Rule-Based Decision-Making System (RBDMS), and Random Forest classification to analyze ground vibrations for wildlife intrusion monitoring.
+A seismic signal-based approach to elephant intrusion detection using signal processing, a Rule-Based Decision-Making System (RBDMS), and Random Forest classification.
 
-Overview
+## Overview
 
-Human–elephant conflict is a significant challenge in areas where human settlements and elephant habitats overlap. This project explores the use of ground-vibration signals captured using geophone sensors to identify elephant-related activity.
+Human–elephant conflict is a major challenge in regions where human settlements overlap with elephant habitats. This project explores the use of ground-vibration signals to identify elephant-related activity and support wildlife intrusion monitoring.
 
-The system processes vibration signals, extracts meaningful signal features, applies rule-based decision logic, and uses a Random Forest classifier for data-driven classification. An MQTT-based receiver is also included as part of the intended real-time data-processing architecture.
+The system analyzes seismic waveform data, extracts relevant signal features, and applies rule-based and machine-learning techniques for classification. An MQTT-based receiver is also included to support sensor-message reception within the intended monitoring architecture.
 
-System Architecture
-Geophone Sensors
-       |
-       v
-Ground-Vibration Signals
-       |
-       v
-Windowing and Signal Processing
-       |
-       v
-Feature Extraction
-       |
-       +--------------------------+
-       |                          |
-       v                          v
-     RBDMS                Feature Dataset
-       |                          |
-       |                          v
-       |                  Random Forest
-       |                          |
-       +------------+-------------+
-                    |
-                    v
-          Classification Output
-                    |
-                    v
-           MQTT-Based Receiver
-                    |
-                    v
-             Alert / Logging
+## Objective
 
-The diagram represents the overall project architecture. The rule-based and machine-learning stages serve distinct purposes, and their exact integration depends on the implementation used for inference.
+To explore a signal-processing and machine-learning approach for identifying elephant-related ground vibrations and distinguishing relevant biological activity from background noise, contributing to the development of wildlife monitoring and early-warning systems.
 
-Key Features
-Seismic Signal Processing: Processes ground-vibration recordings for subsequent analysis.
-Feature Engineering: Extracts compact numerical features from signal windows.
-Rule-Based Decision-Making System (RBDMS): Uses explicit rules to interpret signal characteristics and identify event-like activity.
-Random Forest Classification: Applies supervised machine learning to engineered signal features.
-Feature Analysis: Supports examination of signal characteristics and class-wise feature distributions.
-MQTT Integration: Includes a receiver designed to subscribe to incoming sensor messages.
-Edge-Oriented Design: Uses a compact feature representation intended to support resource-conscious inference.
-Dataset
+## System Architecture
 
-The project uses a seismic ground-vibration dataset containing recordings associated with four classes:
+```text
+     Seismic Sensors
+            |
+            v
+   Ground-Vibration Data
+            |
+            v
+   Signal Preprocessing
+            |
+            v
+     Feature Extraction
+            |
+            v
+   Feature-Based Analysis
+            |
+       +----+----+
+       |         |
+       v         v
+     RBDMS   Random Forest
+       |         |
+       +----+----+
+            |
+            v
+   Classification Results
+            |
+            v
+   Monitoring / Communication
+       (MQTT Receiver)
+```
 
-Class	Samples
-Elephant	164
-Human	164
-Bovid	164
-Noise	164
-Total	656
+*The diagram provides a high-level view of the project workflow. The RBDMS and Random Forest represent distinct rule-based and supervised-learning approaches; their precise interaction depends on the inference implementation.*
 
-The dataset contains three signal channels per waveform. Each waveform was reported as having a shape of (3, 2048) during dataset exploration.
+## Key Features
 
-The consolidated technical report also documents a window configuration of approximately 10 seconds and 2,045 samples. These window dimensions should be verified against the final preprocessing implementation before reproducing the experiments.
+* **Seismic Signal Analysis:** Processes ground-vibration waveforms for further analysis.
+* **Feature Engineering:** Converts waveform data into numerical features suitable for classification.
+* **Rule-Based Decision-Making:** Uses explicit decision rules to screen signal activity.
+* **Random Forest Classification:** Applies supervised learning to engineered signal features.
+* **Signal Visualization:** Supports waveform and frequency-domain analysis across different event classes.
+* **MQTT Communication:** Includes a receiver for incoming sensor messages.
+* **Edge-Oriented Approach:** Explores feature-based processing suitable for resource-conscious deployment.
 
-Dataset note: Raw recordings and derived datasets are not included in this repository by default. Refer to the original dataset source and its licensing terms before obtaining or redistributing the data.
+## Dataset
 
-Signal Processing and Feature Extraction
+The project uses the Elephant Earthquake Detection System (EEDS) seismic waveform dataset, containing recordings from four classes.
 
-The project explores signal preprocessing, waveform visualization, frequency analysis, and feature extraction to convert vibration signals into a compact representation suitable for classification.
+| Class     | Number of recordings |
+| --------- | -------------------: |
+| Elephant  |                  164 |
+| Human     |                  164 |
+| Bovid     |                  164 |
+| Noise     |                  164 |
+| **Total** |              **656** |
 
-Four primary features were selected for the RBDMS and Random Forest feature-based workflow.
+During dataset exploration, each waveform was represented by three signal channels with 2,048 samples per channel, at a sampling rate of approximately 200 Hz.
 
-Feature	Description	Purpose
-STA/LTA	Short-Term Average / Long-Term Average ratio	Highlights transient changes relative to background activity.
-Zero-Crossing Rate (ZCR)	Rate of waveform zero crossings	Describes waveform oscillation and sign-change behaviour.
-Predominant Frequency	Frequency associated with the strongest spectral contribution	Represents dominant frequency characteristics.
-RMS	Root Mean Square amplitude	Measures the overall strength of the vibration signal.
+*Dataset availability and redistribution are subject to the original dataset's access conditions and licence. Raw data is not included by default.*
 
-Together, these features describe complementary signal characteristics, including amplitude, transient behaviour, spectral content, and waveform structure.
+## Signal Processing and Feature Extraction
 
-Rule-Based Decision-Making System (RBDMS)
+Signal processing is used to examine waveform characteristics and derive numerical features for subsequent analysis.
 
-The RBDMS provides an interpretable, rule-oriented approach to evaluating signal features.
+The feature-based workflow focuses on four complementary signal characteristics:
+
+| Feature                      | Purpose                                                              |
+| ---------------------------- | -------------------------------------------------------------------- |
+| **STA/LTA**                  | Highlights transient changes relative to background signal activity. |
+| **Zero-Crossing Rate (ZCR)** | Describes waveform oscillation through zero crossings.               |
+| **Predominant Frequency**    | Represents the dominant spectral characteristics of a signal.        |
+| **Root Mean Square (RMS)**   | Measures the overall magnitude of the vibration signal.              |
+
+Together, these features represent transient behaviour, waveform structure, frequency characteristics, and signal amplitude.
+
+## Rule-Based Decision-Making System (RBDMS)
+
+The RBDMS uses explicit rules to interpret extracted signal features and support event screening.
 
 The project includes two development versions:
 
-RBDMS v1: An earlier implementation of the rule-based feature analysis.
-RBDMS v2: A subsequent implementation that organizes feature evidence and supports biological-event versus noise screening.
+* **RBDMS v1:** Initial implementation of the rule-based analysis.
+* **RBDMS v2:** Updated implementation supporting biological-event versus noise screening.
 
-The rule-based approach provides explicit decision logic that can be inspected and compared with supervised classification results.
+This approach provides interpretable decision logic that can be examined alongside machine-learning-based analysis.
 
-Random Forest Classification
+## Random Forest Classification
 
-Random Forest is used as the supervised machine-learning approach for the engineered feature dataset.
+Random Forest is used as a supervised machine-learning approach for the engineered feature dataset.
 
-The training workflow involves:
+The workflow includes preparing the feature dataset, associating samples with their labels, training the classifier, and evaluating its predictions on held-out data.
 
-Loading the engineered feature dataset and associated metadata.
-Aligning samples with their corresponding labels.
-Preparing the feature matrix and target labels.
-Training the Random Forest classifier.
-Evaluating the trained model on held-out data.
-Saving model information and integrating the model into the inference workflow.
+Unlike an end-to-end waveform model, this approach uses extracted numerical features as its input representation.
 
-The model uses engineered numerical features rather than directly classifying the complete raw waveform.
+### Recorded Evaluation Results
 
-Recorded Model Results
+The project records the following evaluation metrics:
 
-The project model information records the following test metrics:
+| Metric             | Recorded result |
+| ------------------ | --------------: |
+| Accuracy           |          72.73% |
+| Weighted Precision |          71.51% |
+| Weighted Recall    |          72.73% |
+| Weighted F1-score  |          71.86% |
 
-Metric	Recorded value
-Accuracy	72.73%
-Weighted Precision	71.51%
-Weighted Recall	72.73%
-Weighted F1-score	71.86%
-
-These values are recorded project results, not a guarantee of performance on new recordings or real-world deployments. The evaluation split, class-level metrics, and final training configuration should be verified before interpreting these results further.
+These are recorded project results. They should be interpreted in the context of the evaluation split and training configuration, and do not establish performance under real-world deployment conditions.
 
 ## Repository Structure
 
-The repository is organized around signal processing, feature extraction, rule-based decision-making, and machine-learning analysis.
+The repository contains scripts and resources related to signal analysis, feature extraction, and rule-based processing.
 
 ```text
 Elephant_Intrusion_Detection_System/
 ├── Signal Processing/
-│   ├── elephant_dataset/          # Seismic waveform dataset
-│   ├── EEDS_features_v2.csv       # Engineered signal features
-│   ├── EEDS_features_initial.csv  # Initial feature dataset
-│   ├── build_rbdms_v1.py           # Initial RBDMS implementation
-│   ├── build_rbdms_v2.py           # Updated RBDMS implementation
-│   └── ...                         # Analysis scripts and visualizations
+│   ├── elephant_dataset/
+│   ├── EEDS_features_v2.csv
+│   ├── EEDS_features_initial.csv.csv
+│   ├── build_rbdms_v1.py
+│   ├── build_rbdms_v2.py
+│   ├── plot_dataset.py
+│   ├── plot_frequency_analysis.py
+│   └── ...
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
 
-*Note: This is a representative structure. Adjust file and folder names to match the contents actually committed to the repository.*
+*The structure above is illustrative. Update it to reflect the actual files and folders committed to the repository.*
 
 ## My Contributions
 
-My work focused on the signal-processing and feature-based analysis aspects of the project.
+My contributions focused on signal analysis and the feature-based processing workflow.
 
 * **Signal Analysis:** Explored seismic waveform data and examined its time-domain and frequency-domain characteristics.
-* **Feature Selection:** Analyzed signal features and focused on STA/LTA, Zero-Crossing Rate (ZCR), Predominant Frequency, and RMS for feature-based classification.
-* **Rule-Based Decision-Making:** Worked on the development and analysis of the RBDMS, including its successive implementation versions.
-* **Machine Learning:** Contributed to the feature-based Random Forest classification workflow and model evaluation.
-* **Data Visualization:** Generated waveform and frequency-analysis visualizations to understand signal characteristics across different classes.
+* **Feature Selection:** Analyzed signal features and worked with STA/LTA, ZCR, Predominant Frequency, and RMS for feature-based analysis.
+* **RBDMS Development:** Contributed to the development and analysis of rule-based decision-making implementations.
+* **Machine Learning:** Worked on the feature-based Random Forest classification workflow and model evaluation.
+* **Data Visualization:** Generated waveform and frequency-analysis plots to examine signal characteristics across different classes.
 
-These contributions supported the development and evaluation of a feature-based approach to elephant intrusion detection using ground-vibration signals.
+These activities contributed to the analysis and development of the seismic signal-based detection approach.
 
-## Objective
+## Limitations and Future Scope
 
-The objective of this project is to explore a seismic signal-based approach for detecting elephant-related activity using ground-vibration data. By combining signal processing, selected statistical and frequency-domain features, rule-based decision-making, and Random Forest classification, the project aims to distinguish relevant biological events from background noise and support the development of wildlife intrusion monitoring and early-warning systems.
+* Validate the approach across different sensor locations and environmental conditions.
+* Improve robustness against background vibrations and environmental noise.
+* Evaluate classification performance on additional recordings.
+* Further validate real-time communication and monitoring under practical deployment conditions.
+
+## Technologies Used
+
+* **Programming:** Python
+* **Signal Processing:** Waveform and frequency analysis
+* **Feature Engineering:** STA/LTA, ZCR, Predominant Frequency, RMS
+* **Machine Learning:** Random Forest
+* **Decision Logic:** Rule-Based Decision-Making System
+* **Communication:** MQTT
+
+## Project Status
+
+The project covers seismic signal analysis, feature engineering, rule-based screening, and Random Forest classification. Further validation is needed to establish the reliability of the complete system under real-world operating conditions.
+
+## Author
+
+**Arjun Narendra Kumar**
+
+GitHub: [@Arjun-Narendra](https://github.com/Arjun-Narendra)
