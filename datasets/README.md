@@ -1,31 +1,39 @@
-# Dataset Documentation
+# Dataset Files
 
-This directory contains dataset resources used in the Elephant Intrusion Detection System (EIDS) for seismic signal analysis and feature-based classification.
+## Overview
 
-## Dataset Overview
+This directory contains the processed feature dataset and metadata used in the Elephant Intrusion Detection System (EIDS) project.
 
-The project uses ground-vibration recordings associated with four classes: elephant, human, bovid, and noise. These recordings are explored to understand signal characteristics and develop a feature-based approach to wildlife intrusion monitoring.
+These files support feature-based analysis, the Rule-Based Decision-Making System (RBDMS), and Random Forest classification.
 
-## Dataset Organization
+## Files
 
-```text
-datasets/
-├── elephant/                   # Elephant-associated recordings
-├── human/                      # Human-associated recordings
-├── bovid/                      # Bovid-associated recordings
-├── noise/                      # Background noise recordings
-├── metadata.csv                # Dataset metadata
-├── EEDS_features_v2.csv        # Engineered feature dataset
-└── EEDS_features_initial.csv   # Initial feature dataset
-```
+### 1. `EEDS_features_v2.csv`
 
-*The directory structure above describes the intended organization. Keep only files that are actually present in the repository, and use the exact filenames committed to GitHub.*
+Contains the extracted signal features used in the feature-based processing and classification workflow.
 
-## Class Distribution
+The project investigates features such as:
 
-The dataset explored during project development contains 656 recordings distributed equally across four classes.
+* **STA/LTA** — Short-Term Average to Long-Term Average ratio.
+* **ZCR** — Zero Crossing Rate.
+* **Predominant Frequency** — Dominant frequency component of a signal.
+* **RMS** — Root Mean Square amplitude.
 
-| Class     | Number of recordings |
+The CSV may also contain additional extracted features and class labels. Refer to the file's actual columns when using it.
+
+**Purpose:** Supports feature analysis, RBDMS processing, and Random Forest model development.
+
+### 2. `metadata.csv`
+
+Contains metadata associated with the dataset.
+
+**Purpose:** Provides supporting information for understanding or identifying dataset records. Refer to the actual column names to determine which metadata fields are available and how they correspond to the feature dataset.
+
+## Dataset Classes
+
+The project dataset was previously described as containing four classes:
+
+| Class     | Number of Recordings |
 | --------- | -------------------: |
 | Elephant  |                  164 |
 | Human     |                  164 |
@@ -33,48 +41,29 @@ The dataset explored during project development contains 656 recordings distribu
 | Noise     |                  164 |
 | **Total** |              **656** |
 
-## Signal Format
+These counts describe the dataset used during project development; verify them against the uploaded CSV files before treating them as the current file counts.
 
-During dataset exploration, each waveform was represented by three signal channels, with 2,048 samples per channel.
+## How These Files Are Used
 
-* **Signal type:** Ground-vibration / seismic waveform
-* **Number of channels:** 3
-* **Samples per channel:** 2,048
-* **Sampling frequency:** Approximately 200 Hz, as reported during dataset exploration
+The files support the following workflow:
 
-These details describe the dataset examined during development. Verify them against the source dataset and preprocessing scripts before using them as definitive specifications.
+1. Load the extracted features required by the selected processing script.
+2. Use relevant signal features in the RBDMS workflow.
+3. Prepare the feature data and labels for Random Forest classification.
+4. Use metadata when required to interpret or associate dataset records.
 
-## Feature Dataset
+The exact input requirements depend on the individual source script.
 
-The directory also includes CSV files containing engineered signal features.
+## Before Using the Files
 
-* **`EEDS_features_v2.csv`:** Feature dataset used in the later feature-based workflow.
-* **`EEDS_features_initial.csv`:** Initial feature dataset retained for reference, if included.
-* **`metadata.csv`:** Metadata associated with the dataset, used to identify or organize recordings and their labels.
+* Check the CSV column names and data types.
+* Confirm the class labels and target column expected by the script.
+* Verify the file paths used in the source code.
+* Ensure that the metadata and feature records correspond correctly.
+* Check the dataset's original source, attribution requirements, and redistribution permissions.
 
-The feature-based workflow focuses on four primary features:
+## Data Availability
 
-* Short-Term Average / Long-Term Average (STA/LTA)
-* Zero-Crossing Rate (ZCR)
-* Predominant Frequency
-* Root Mean Square (RMS)
+This directory contains the feature dataset and metadata, not the original raw seismic waveform recordings.
 
-These features describe different aspects of signal behaviour and are used in rule-based analysis and Random Forest classification.
-
-## Data Usage
-
-The dataset supports signal visualization, frequency analysis, feature extraction, rule-based decision-making, and machine-learning experiments.
-
-The dataset and feature files should be used consistently with the corresponding metadata and preprocessing workflow to maintain the correct association between recordings, features, and labels.
-
-## Data Availability and Licensing
-
-Before redistributing or publishing the raw recordings, metadata, or derived feature files, verify the original dataset's licence, attribution requirements, and permission to share.
-
-If the source dataset cannot be redistributed, retain only this documentation and provide an appropriate reference to the original source, where permitted.
-
-## Notes
-
-* The number of recordings and signal dimensions reflect the dataset examined during project development.
-* Feature CSV files may contain derived information from the raw recordings.
-* The presence of a feature file does not by itself guarantee that the associated model can be reproduced without the corresponding preprocessing and training workflow.
+Please refer to the original dataset source and its applicable terms for information about data provenance and permitted use.
