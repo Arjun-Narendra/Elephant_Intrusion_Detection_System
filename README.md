@@ -127,8 +127,8 @@ The repository contains scripts and resources related to signal analysis, featur
 Elephant_Intrusion_Detection_System/
 ├── Signal Processing/
 │   ├── elephant_dataset/
-│   ├── EEDS_features_v2.csv
-│   ├── EEDS_features_initial.csv.csv
+│   ├── EIDS_features_v2.csv
+│   ├── EIDS_features_initial.csv
 │   ├── build_rbdms_v1.py
 │   ├── build_rbdms_v2.py
 │   ├── plot_dataset.py
