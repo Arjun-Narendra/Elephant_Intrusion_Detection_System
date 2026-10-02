@@ -125,18 +125,15 @@ The repository contains scripts and resources related to signal analysis, featur
 
 ```text
 Elephant_Intrusion_Detection_System/
-├── Signal Processing/
-│   ├── elephant_dataset/
-│   ├── EIDS_features_v2.csv
-│   ├── EIDS_features_initial.csv
-│   ├── build_rbdms_v1.py
-│   ├── build_rbdms_v2.py
-│   ├── plot_dataset.py
-│   ├── plot_frequency_analysis.py
-│   └── ...
-├── .gitignore
+├── README.md
 ├── LICENSE
-└── README.md
+├── .gitignore
+├── datasets/
+└── src/
+    ├── signal_processing/
+    ├── rbdms/
+    ├── random_forest/
+    └── implementation/
 ```
 
 *The structure above is illustrative. Update it to reflect the actual files and folders committed to the repository.*
